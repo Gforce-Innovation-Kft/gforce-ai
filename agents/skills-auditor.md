@@ -7,6 +7,7 @@ description: >
   DO NOT TRIGGER when: installing or authoring a single skill in one repo.
 tools: Read, Grep, Glob, Bash
 model: sonnet
+version: 1.0.0
 ---
 
 # Skills auditor

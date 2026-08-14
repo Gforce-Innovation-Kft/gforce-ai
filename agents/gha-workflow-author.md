@@ -8,6 +8,7 @@ description: >
   definitions.
 tools: Read, Grep, Glob, Edit, Write, Bash
 model: opus
+version: 1.0.0
 ---
 
 # GitHub Actions author

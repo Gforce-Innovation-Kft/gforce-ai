@@ -8,6 +8,7 @@ description: >
   a repo that also contains Apex.
 tools: Read, Grep, Glob, ReportFindings
 model: opus
+version: 1.0.0
 ---
 
 # Salesforce code reviewer
