@@ -10,8 +10,13 @@
 |---|---|
 | `sfdx-project.json` | `salesforce-developer` skill + `sf-code-reviewer` agent |
 | `.github/workflows/*.y{a,}ml` | `gforce-github-actions` skill + `gha-workflow-author` agent |
-| `Dockerfile*` | docker skills |
-| `*.tf` | terraform skills |
+| `Dockerfile*` | `docker-expert`, `multi-stage-dockerfile`, `devcontainer-setup` skills |
+| `*.tf` | `terraform-test`, `terraform-module-library` skills |
+
+**Note:** unlike the SFDX and GHA rows, the Docker and Terraform rows name **externally vendored
+skills with no GForce-authored agent**. That asymmetry is real (nobody has written a
+`docker-reviewer` or `terraform-reviewer` agent yet) and is left visible here rather than papered
+over with a placeholder name.
 
 ## Global set (6)
 

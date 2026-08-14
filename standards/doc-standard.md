@@ -4,6 +4,7 @@ Precedence: **L3 (repo) > L2 (capability) > L1 (fleet)**.
 
 | File | Required | Length | Rule |
 |---|---|---|---|
+| `standards/*.md` | always | **≤300 lines** | Fleet-wide standards consumed by every repo; the authority other documents defer to. |
 | `README.md` | always | any | Humans: what it is, how to run it. |
 | `CLAUDE.md` | always | **≤150 lines** | Purpose, key commands, guardrails. Points outward. Never duplicates `standards/` or `references/`. |
 | `AGENTS.md` | always | — | **Symlink → `CLAUDE.md`.** Covers Codex/Cursor/Copilot at zero maintenance cost. |
