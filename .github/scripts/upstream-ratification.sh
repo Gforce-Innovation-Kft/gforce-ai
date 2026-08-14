@@ -25,7 +25,9 @@ while IFS= read -r src; do
 
   # A failed clone must fail the job: a silent skip would read as "no upstream
   # changes" — an all-clear nobody issued.
-  git clone --quiet --single-branch --branch "$ref" "https://github.com/$src.git" "$dir"
+  # SOURCE_BASE_URL exists so tests can point at file:// fixtures; production
+  # always uses the default.
+  git clone --quiet --single-branch --branch "$ref" "${SOURCE_BASE_URL:-https://github.com/}$src.git" "$dir"
   head="$(git -C "$dir" rev-parse HEAD)"
   [ "$head" = "$pinned" ] && continue
 
@@ -72,8 +74,8 @@ while IFS= read -r src; do
     delta_skill="$(basename "$(dirname "$anchors_file")")"
     while IFS= read -r ov; do
       prefixes=()
-      while IFS= read -r p; do prefixes+=("$p"); done < <(jq -r '.paths[]' <<<"$ov")
-      rule="$(jq -r '.upstream_rule' <<<"$ov")"
+      while IFS= read -r p; do prefixes+=("$p"); done < <(jq -r '.upstream_paths[]' <<<"$ov")
+      primary="$(jq -r '.tripwires[0]' <<<"$ov")"
       gforce="$(jq -r '.gforce_rule' <<<"$ov")"
 
       touched=()
@@ -88,15 +90,29 @@ while IFS= read -r src; do
       extra=$(( ${#touched[@]} > 6 ? ${#touched[@]} - 6 : 0 ))
       [ "$extra" -gt 0 ] && files="$files (+$extra more)"
 
-      # grep -c, not -q: -q exits at first match, git diff dies of SIGPIPE, and
-      # under pipefail the pipeline reads as failed — flipping a real CONFLICT
-      # into "Touched". -c consumes the whole stream; || true guards its exit 1
-      # on zero matches.
-      rule_hits="$(git -C "$dir" diff -U0 "$pinned..$head" -- "${prefixes[@]}" | { grep -cF "$rule" || true; })"
+      # The diff is captured once and scanned per tripwire variant — an
+      # upstream rewording that dodges one variant is still caught by the
+      # next. grep -c, not -q: -q exits at first match and, under pipefail, a
+      # SIGPIPE'd producer flips a real CONFLICT into "Touched". -c consumes
+      # the whole stream; || true guards its exit 1 on zero matches.
+      # Keep only added/removed content lines: hunk headers repeat the nearest
+      # preceding line after @@ (git's funcname heuristic), which can smuggle a
+      # tripwire into the scan and fake a CONFLICT from an unrelated edit.
+      diff_text="$(git -C "$dir" diff -U0 "$pinned..$head" -- "${prefixes[@]}" \
+        | { grep -E '^[+-]' || true; } | { grep -Ev '^(\+\+\+|---)' || true; })"
+      rule_hits=0
+      hit_variants=""
+      while IFS= read -r trip; do
+        n="$(printf '%s\n' "$diff_text" | { grep -cF "$trip" || true; })"
+        if [ "$n" -gt 0 ]; then
+          rule_hits=$((rule_hits + n))
+          hit_variants="${hit_variants:+$hit_variants, }\`$trip\` ($n)"
+        fi
+      done < <(jq -r '.tripwires[]' <<<"$ov")
       if [ "$rule_hits" -gt 0 ]; then
-        echo "- [ ] **CONFLICT** — diff touches \`$rule\` ($rule_hits hunk line(s)), which \`$delta_skill\` overrides (*$gforce*). Confirm the delta still stands or update it in this PR. Files: $files" >> "$REPORT"
+        echo "- [ ] **CONFLICT** — diff hits tripwire(s) $hit_variants, which \`$delta_skill\` overrides (*$gforce*). Confirm the delta still stands or update it in this PR. Files: $files" >> "$REPORT"
       else
-        echo "- [ ] Touched — an area \`$delta_skill\` overrides changed, but \`$rule\` is not in the diff; skim for a rephrase. Files: $files" >> "$REPORT"
+        echo "- [ ] Touched — an area \`$delta_skill\` overrides changed with no tripwire (\`$primary\`, …) in the diff; skim for a rephrase. Files: $files" >> "$REPORT"
       fi
       hits=$((hits + 1))
     done < <(jq -c '.overrides[]' "$anchors_file")
@@ -119,7 +135,7 @@ if [ "$changed" = true ]; then
     echo "- [ ] Compare link reviewed end-to-end — this PR is the fleet's prompt-injection boundary"
     echo "- [ ] Every **CONFLICT** above resolved: delta confirmed, or updated in this PR"
     echo "- [ ] No GForce skill now restates an upstream rule (deltas only — standards/upstream-policy.md)"
-    echo "- [ ] Evals ran (\`cd evals && npm test\`) — note: dispatch unwired, fixtures report *skipped*, do not read green as a score"
+    echo "- [ ] If this update changes what an agent should flag, dispatch the eval suite and refresh the scorecards in \`standards/evals/\`"
     echo
     echo "**Never auto-merge this PR.**"
   } >> "$REPORT"
