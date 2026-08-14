@@ -1,0 +1,27 @@
+{
+  "$comment": "Delta anchors — machine-readable claims that this skill overrides an upstream rule. Consumed by .github/scripts/upstream-ratification.sh; format in standards/upstream-policy.md. paths are directory prefixes in the upstream repo; upstream_rule is a literal tripwire string grepped in diff hunks.",
+  "source": "forcedotcom/sf-skills",
+  "overrides": [
+    {
+      "paths": [
+        "skills/platform-soql-query",
+        "skills/platform-apex-generate",
+        "skills/platform-apex-test-run",
+        "skills/experience-lwc-generate"
+      ],
+      "upstream_rule": "WITH SECURITY_ENFORCED",
+      "gforce_rule": "WITH USER_MODE — enforces CRUD and sharing as well as FLS",
+      "delta": "SKILL.md hard stops: WITH SECURITY_ENFORCED banned in new code"
+    },
+    {
+      "paths": [
+        "skills/platform-apex-generate",
+        "skills/platform-apex-test-generate",
+        "skills/platform-apex-logs-debug"
+      ],
+      "upstream_rule": "System.debug",
+      "gforce_rule": "Logger.* (NebulaLogger) — System.debug banned everywhere, tests included",
+      "delta": "SKILL.md hard stops: System.debug anywhere"
+    }
+  ]
+}

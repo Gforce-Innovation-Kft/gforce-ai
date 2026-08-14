@@ -16,6 +16,8 @@ consumed everywhere, instead of being copy-pasted and drifting per repo. This re
   A green `npm test` means the harness's own unit tests pass, not that any agent scored.
 - `standards/` — fleet-wide policy that skills and agents are checked against.
   Start here: `standards/doc-standard.md` and `standards/skill-scope.md`.
+- `upstream/` — approved industry skills and their ratified pins (`catalog.json`).
+  Policy: `standards/upstream-policy.md`. Never a mirror — bytes install from upstream.
 - `docs/` — not distributed. `architecture.md` (repository responsibilities and boundary
   tests) and `deferred-verification.md` (checks that need a live org).
 
@@ -33,11 +35,13 @@ not built; do not reference them as if they were.
   because the lockfile caught them; the agents were not. Closing this gap is on the roadmap in
   `docs/architecture.md`.
 
-## Precedence: fleet → shared → local, last wins
+## Precedence: industry → fleet → shared → local, last wins
 
-Every consuming repo's configuration is layered. **Local beats shared beats fleet** on any
-conflict:
+Every consuming repo's configuration is layered. **Local beats shared beats fleet beats
+industry** on any conflict:
 
+- **industry** — ratified upstream skills (`upstream/catalog.json`, e.g.
+  `forcedotcom/sf-skills`). The floor, never the ceiling: any GForce layer beats them.
 - **fleet** — this repo. Standards and defaults that apply everywhere.
 - **shared** — skills and agents placed by capability marker (e.g. `sfdx-project.json`,
   `Dockerfile*`) — see `standards/skill-scope.md` for the full marker table.

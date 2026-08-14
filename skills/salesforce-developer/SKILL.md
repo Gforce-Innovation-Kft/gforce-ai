@@ -9,7 +9,7 @@ description: >
   DO NOT TRIGGER when: writing Ansible, GitHub Actions, Terraform, or TypeScript/Node
   tooling that merely mentions Salesforce; or when the task is CI/CD plumbing, not org
   metadata.
-version: 1.2.0
+version: 1.3.0
 tags: [salesforce, apex, lwc, fflib, development, technical]
 ---
 
@@ -21,6 +21,11 @@ Load this skill for any Salesforce technical task: Apex classes, LWC components,
 and is installed per repo via `npx skills add Gforce-Innovation-Kft/gforce-ai@salesforce-developer`,
 tracked in that repo's `skills-lock.json`. Repo-specific rules go in
 `.claude/references/local-standards.md` and win over this file.
+
+**This skill is a delta over the ratified industry skills** (`forcedotcom/sf-skills`,
+pinned in `gforce-ai`'s `upstream/catalog.json`): it states only where GForce differs, and
+it **wins** over upstream on any conflict. Machine-readable anchors for those overrides
+live in `overrides.json` next to this file (`standards/upstream-policy.md`).
 
 ---
 
