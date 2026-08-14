@@ -330,7 +330,7 @@ Always use `Limits.getQueries()` guards in Batch `execute()` if dynamically issu
 **Never hardcode an API version. Read it from the repo you are working in** —
 `sfdx-project.json` → `sourceApiVersion` — and put that value in every new `*-meta.xml`.
 
-This repo is on **67.0**; `sf-develop-demo` is on **65.0**. The official
+Consuming repos differ — check the current repo's value rather than assuming one. The official
 `platform-apex-generate` skill defaults to **66.0** and will use that unless told otherwise, so
 state the repo's version explicitly when invoking it.
 

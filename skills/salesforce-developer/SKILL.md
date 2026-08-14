@@ -9,7 +9,7 @@ description: >
   DO NOT TRIGGER when: writing Ansible, GitHub Actions, Terraform, or TypeScript/Node
   tooling that merely mentions Salesforce; or when the task is CI/CD plumbing, not org
   metadata.
-version: 1.1.0
+version: 1.2.0
 tags: [salesforce, apex, lwc, fflib, development, technical]
 ---
 
@@ -89,9 +89,9 @@ Before writing a line, confirm:
 - **Read the matching file in `assets/` before authoring.** They are real, compiling examples of
   the layer you are about to write; adapt them rather than inventing a shape.
 - **Take the API version from the repo**, not from memory: `sfdx-project.json` →
-  `sourceApiVersion`. This template is 67.0, `sf-develop-demo` is 65.0, and
-  `platform-apex-generate` defaults to 66.0 unless you override it. State the version you are
-  using when you invoke that skill.
+  `sourceApiVersion`. Consuming repos differ — check the value in the repo you're actually in
+  rather than assuming one; `platform-apex-generate` defaults to 66.0 unless you override it.
+  State the version you are using when you invoke that skill.
 
 ---
 
