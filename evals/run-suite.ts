@@ -15,6 +15,7 @@
  */
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import { checkExpected, type Expected, type Finding } from './expected.js';
 
@@ -76,6 +77,22 @@ export function scorecard(results: FixtureResult[]): {
   }
 
   return { recallHits, recallTotal, falsePositives, cleanTotal, totalCostCents, failed, skipped };
+}
+
+/**
+ * True if any discovered fixture asserts maxFindings: 0 — i.e. this suite HAS a
+ * clean control — regardless of whether that fixture was actually scored this
+ * run. `isCleanControl` is set from expected.json before any skip decision, so
+ * skipped fixtures (no actual.json yet, budget exhausted) still count here.
+ *
+ * This is deliberately distinct from scorecard().cleanTotal, which only counts
+ * clean controls that were SCORED. Conflating the two is the bug this guards
+ * against: a suite with an unscored clean control would otherwise report
+ * "no clean control", which is false and trains operators to ignore the one
+ * warning that protects against a gameable (recall-only) suite.
+ */
+export function hasCleanControl(results: FixtureResult[]): boolean {
+  return results.some((r) => r.isCleanControl);
 }
 
 /**
@@ -161,11 +178,23 @@ function main(): number {
       `${s.totalCostCents.toFixed(1)}¢`
   );
 
-  if (s.cleanTotal === 0) {
+  // Only warn when the suite truly lacks a clean control (no fixture on disk
+  // asserts maxFindings: 0). If a clean control exists but wasn't scored this
+  // run, the per-fixture "no actual.json" line above already explains why —
+  // repeating that at the top would just be noise, and falsely claiming the
+  // control is "missing" would teach operators to ignore the one warning that
+  // keeps this suite's recall metric from being gameable.
+  if (!hasCleanControl(results)) {
     console.error('\n  WARNING: no clean control (maxFindings: 0) — recall alone is gameable.');
   }
 
   return s.failed > 0 || s.skipped > 0 ? 2 : 0;
 }
 
-process.exit(main());
+// Only run (and exit) when executed directly — e.g. `tsx run-suite.ts` or
+// `npm run evals`. Importing this module (as expected.test.ts does, for
+// hasCleanControl) must not trigger a live run or a process.exit.
+const isMain = !!process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+  process.exit(main());
+}
