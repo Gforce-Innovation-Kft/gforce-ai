@@ -1,0 +1,6 @@
+{
+  "description": "Correct selector: explicit USER_MODE constructor, null/empty guard, enumerated fields. The false-positive control.",
+  "assert": {
+    "maxFindings": 0
+  }
+}

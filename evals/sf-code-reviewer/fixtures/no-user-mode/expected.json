@@ -1,0 +1,13 @@
+{
+  "description": "Selector with no DataAccess.USER_MODE constructor — runs in system mode with no FLS, CRUD, or sharing enforcement. Real defect from sf-develop-demo.",
+  "assert": {
+    "mustFlag": [
+      {
+        "file": "WeatherReportsSelector.cls",
+        "category": "security"
+      }
+    ],
+    "minFindings": 1,
+    "maxFindings": 3
+  }
+}

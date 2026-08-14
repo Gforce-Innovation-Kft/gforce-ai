@@ -1,0 +1,17 @@
+--- /dev/null
++++ b/force-app/main/default/classes/WeatherReportsSelector.cls
+@@
++public inherited sharing class WeatherReportsSelector extends fflib_SObjectSelector {
++    public Schema.SObjectType getSObjectType() {
++        return Weather_Report__c.SObjectType;
++    }
++    public List<Schema.SObjectField> getSObjectFieldList() {
++        return new List<Schema.SObjectField>{
++            Weather_Report__c.Id,
++            Weather_Report__c.Name
++        };
++    }
++    public List<Weather_Report__c> selectById(Set<Id> ids) {
++        return (List<Weather_Report__c>) selectSObjectsById(ids);
++    }
++}

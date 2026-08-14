@@ -1,0 +1,10 @@
+--- a/force-app/main/default/classes/AccountsServiceImpl.cls
++++ b/force-app/main/default/classes/AccountsServiceImpl.cls
+@@
+     public void refreshRatings(List<Account> accounts) {
++        for (Account a : accounts) {
++            List<Contact> cs = [SELECT Id, Email FROM Contact WHERE AccountId = :a.Id];
++            a.Description = String.valueOf(cs.size());
++            update a;
++        }
+     }

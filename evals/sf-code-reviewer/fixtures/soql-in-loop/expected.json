@@ -1,0 +1,12 @@
+{
+  "description": "Both SOQL and DML inside a for loop over a bulk collection. Two separate hard stops.",
+  "assert": {
+    "mustFlag": [
+      {
+        "file": "AccountsServiceImpl.cls",
+        "category": "governor-limits"
+      }
+    ],
+    "minFindings": 2
+  }
+}
