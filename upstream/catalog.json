@@ -50,6 +50,12 @@
           "name": "agentforce-test",
           "path": "skills/agentforce-test",
           "marker": "**/genAiPlugins/**"
+        },
+        {
+          "name": "platform-docs-get",
+          "path": "skills/platform-docs-get",
+          "marker": "manual",
+          "$comment": "Salesforce docs lookup — no clean capability marker; placed by hand where a Salesforce-adjacent need exists (first consumer: sf-docker-images, which was already running it unratified)."
         }
       ]
     }
