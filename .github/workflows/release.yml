@@ -1,0 +1,25 @@
+---
+# Repo releases are semver tags: major = breaking governance change
+# (precedence semantics, non-overridable core, renames), minor = new/changed
+# skills, agents, standards, ratifications, patch = docs and fixes. No
+# artifacts — consumers pin commits via lockfile/manifest; the tag is the
+# human-readable marker bump PRs reference.
+name: release
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+permissions: {}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: Create GitHub Release with generated notes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" --generate-notes
