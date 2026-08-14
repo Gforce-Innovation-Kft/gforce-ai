@@ -81,8 +81,9 @@ Before writing a line, confirm:
 - [ ] DML lives only in Unit of Work (`uow.commitWork()`) — never direct `insert`/`update`/`delete`
 - [ ] `with sharing` is the default — `without sharing` requires an explicit comment explaining why
 - [ ] Does `Application.cls` need updating? (register new SObjects in Service, Selector, Domain, UoW maps)
-- [ ] Every new Selector's constructor passes `DataAccess.USER_MODE` — **fflib enforces nothing
-      by default**, so a selector without it silently runs in system mode
+- [ ] Every new Selector's constructor passes `DataAccess.USER_MODE` — **fflib does not enforce
+      FLS by default**, so a selector without it silently runs with FLS unenforced (CRUD is
+      still checked, and `with sharing` still applies)
 
 ## Step 2a — Templates and API version
 

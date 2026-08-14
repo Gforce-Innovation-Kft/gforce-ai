@@ -1,5 +1,5 @@
 {
-  "description": "Selector with no DataAccess.USER_MODE constructor — runs in system mode with no FLS, CRUD, or sharing enforcement. Real defect from sf-develop-demo.",
+  "description": "Selector with no DataAccess.USER_MODE constructor — runs with FLS unenforced and DataAccess.LEGACY; CRUD enforcement and the with sharing parent class still apply. Real defect from sf-develop-demo.",
   "assert": {
     "mustFlag": [
       {
