@@ -1,0 +1,57 @@
+{
+  "$comment": "Catalog-of-record for industry upstream skills. Policy: standards/upstream-policy.md. ratified_commit advances only via a merged ratification PR (.github/workflows/upstream-ratification.yml). markers use the same capability-marker mechanism as standards/skill-scope.md; the genAiPlugins marker is a seed and provisional until the first Agentforce consumer exists.",
+  "sources": {
+    "forcedotcom/sf-skills": {
+      "ref": "main",
+      "ratified_commit": "ba78d3871d54196e86dbde6bbd9f9a79944ff07f",
+      "ratified_on": "2026-08-14",
+      "skills": [
+        {
+          "name": "platform-apex-generate",
+          "path": "skills/platform-apex-generate",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "platform-apex-test-generate",
+          "path": "skills/platform-apex-test-generate",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "platform-apex-test-run",
+          "path": "skills/platform-apex-test-run",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "platform-apex-logs-debug",
+          "path": "skills/platform-apex-logs-debug",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "platform-soql-query",
+          "path": "skills/platform-soql-query",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "platform-metadata-deploy",
+          "path": "skills/platform-metadata-deploy",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "experience-lwc-generate",
+          "path": "skills/experience-lwc-generate",
+          "marker": "sfdx-project.json"
+        },
+        {
+          "name": "agentforce-generate",
+          "path": "skills/agentforce-generate",
+          "marker": "**/genAiPlugins/**"
+        },
+        {
+          "name": "agentforce-test",
+          "path": "skills/agentforce-test",
+          "marker": "**/genAiPlugins/**"
+        }
+      ]
+    }
+  }
+}

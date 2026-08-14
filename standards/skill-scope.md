@@ -24,6 +24,12 @@ over with a placeholder name.
 
 Everything else is project-scoped. Audited quarterly by the `skills-auditor` agent.
 
+## Upstream-sourced skills
+
+Industry skills (e.g. `forcedotcom/sf-skills`) also place by capability marker, but their
+approved set and ratified pins live in `upstream/catalog.json`, governed by
+`standards/upstream-policy.md`. A skill absent from that catalog is not approved anywhere.
+
 ## Operational trap
 
 **`npx skills check` is NOT read-only.** It fetches upstream and rewrites `SKILL.md` and

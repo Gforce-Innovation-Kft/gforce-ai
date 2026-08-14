@@ -1,0 +1,50 @@
+---
+# Governed intake of industry upstream skills (standards/upstream-policy.md).
+#
+# Polls each source pinned in upstream/catalog.json, and when approved skill
+# content changed upstream, opens ONE ratification PR: compare link, per-skill
+# change table, and the delta-conflict checklist. Merge = ratification; the
+# fleet converges afterwards. This PR is the prompt-injection boundary for
+# third-party skill content — it is never auto-merged.
+name: Upstream skill ratification
+
+on:
+  schedule:
+    # Tuesdays 06:00 UTC — the day after shared-github-actions' catalog refresh.
+    - cron: '0 6 * * 2'
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: upstream-ratification
+  cancel-in-progress: true
+
+jobs:
+  ratify:
+    name: Poll upstream and open a ratification PR on change
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out files
+        uses: actions/checkout@v7
+
+      - name: Diff upstream against ratified pins
+        id: poll
+        env:
+          REPORT_PATH: ${{ runner.temp }}/ratification-report.md
+        run: ./.github/scripts/upstream-ratification.sh
+
+      - name: Open the ratification PR
+        if: steps.poll.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          add-paths: |
+            upstream/catalog.json
+          branch: chore/upstream-ratification
+          delete-branch: true
+          commit-message: 'chore: advance upstream skill pins for ratification'
+          title: 'chore: ratify upstream skill update'
+          body-path: ${{ runner.temp }}/ratification-report.md
