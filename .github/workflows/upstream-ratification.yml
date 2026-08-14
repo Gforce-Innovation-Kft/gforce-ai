@@ -31,11 +31,19 @@ jobs:
       - name: Check out files
         uses: actions/checkout@v7
 
+      - name: Set up node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install
+        run: npm ci
+
       - name: Diff upstream against ratified pins
         id: poll
         env:
           REPORT_PATH: ${{ runner.temp }}/ratification-report.md
-        run: ./.github/scripts/upstream-ratification.sh
+        run: npx tsx src/cli.ts ratify
 
       - name: Open the ratification PR
         if: steps.poll.outputs.changed == 'true'

@@ -1,0 +1,63 @@
+---
+# Reusable consumer convergence: refreshes gforce-ai-sourced skills and the
+# agent manifest, then opens a bump PR when anything moved. Industry-skill
+# bumps stay tied to a ratification (ratify first, bump second) and are named
+# explicitly by the caller — this workflow never blanket-updates upstream
+# content. Callers: weekly cron + workflow_dispatch for the urgent path
+# (actions:write, never contents:write on the caller side).
+name: governance-bump
+
+on:
+  workflow_call:
+    inputs:
+      skills:
+        description: Space-separated skill names to `npx skills update`
+        type: string
+        default: ''
+
+permissions: {}
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/checkout@v7
+        with:
+          repository: Gforce-Innovation-Kft/gforce-ai
+          path: .gforce-ai
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install governance tooling
+        working-directory: .gforce-ai
+        run: npm ci
+
+      - name: Update the named skills (dedicated branch via the PR below)
+        if: inputs.skills != ''
+        run: npx skills update ${{ inputs.skills }}
+
+      - name: Refresh the agent manifest
+        working-directory: .gforce-ai
+        run: npx tsx src/cli.ts manifest "$GITHUB_WORKSPACE"
+
+      - name: Drop the tooling checkout before diffing
+        run: rm -rf .gforce-ai
+
+      - name: Open a bump PR when anything moved
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/governance-bump
+          delete-branch: true
+          commit-message: 'chore: governance bump (skills + agent manifest)'
+          title: 'chore: governance bump'
+          body: >
+            Automated convergence to the ratified GForce state
+            (skills named by the caller + regenerated gforce-manifest.json).
+            Review the diff as content changes, not as noise.

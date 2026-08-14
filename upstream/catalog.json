@@ -58,6 +58,45 @@
           "$comment": "Salesforce docs lookup — no clean capability marker; placed by hand where a Salesforce-adjacent need exists (first consumer: sf-docker-images, which was already running it unratified)."
         }
       ]
+    },
+    "trailofbits/skills": {
+      "$comment": "Ratified 2026-08-14 in the governance-v2 PR — previously consumed ungoverned by sf-docker-images.",
+      "ref": "main",
+      "ratified_commit": "4db88ee79db0a68bbe049fe827e272ee2bc19510",
+      "ratified_on": "2026-08-14",
+      "skills": [
+        {
+          "name": "devcontainer-setup",
+          "path": "plugins/devcontainer-setup/skills/devcontainer-setup",
+          "marker": ".devcontainer/**"
+        }
+      ]
+    },
+    "sickn33/antigravity-awesome-skills": {
+      "$comment": "Ratified 2026-08-14 in the governance-v2 PR — this source relabeled docker-expert risk:critical with zero review while ungoverned; that class of change now lands in a ratification PR.",
+      "ref": "main",
+      "ratified_commit": "77a348f816d822b16f6ee9c3d72445ec92f70699",
+      "ratified_on": "2026-08-14",
+      "skills": [
+        {
+          "name": "docker-expert",
+          "path": "skills/docker-expert",
+          "marker": "Dockerfile*"
+        }
+      ]
+    },
+    "github/awesome-copilot": {
+      "$comment": "Ratified 2026-08-14 in the governance-v2 PR — previously consumed ungoverned by sf-docker-images.",
+      "ref": "main",
+      "ratified_commit": "782200e3a4f7c17248974ac4a63284c868bc290f",
+      "ratified_on": "2026-08-14",
+      "skills": [
+        {
+          "name": "multi-stage-dockerfile",
+          "path": "skills/multi-stage-dockerfile",
+          "marker": "Dockerfile*"
+        }
+      ]
     }
   }
 }

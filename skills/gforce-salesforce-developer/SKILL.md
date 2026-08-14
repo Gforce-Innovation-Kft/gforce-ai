@@ -1,5 +1,5 @@
 ---
-name: salesforce-developer
+name: gforce-salesforce-developer
 description: >
   GForce Salesforce house standards — fflib architecture, NebulaLogger, bulkification,
   governor limits, boundary testing, and the 90% coverage gate.
@@ -9,7 +9,7 @@ description: >
   DO NOT TRIGGER when: writing Ansible, GitHub Actions, Terraform, or TypeScript/Node
   tooling that merely mentions Salesforce; or when the task is CI/CD plumbing, not org
   metadata.
-version: 1.3.0
+version: 2.0.0
 tags: [salesforce, apex, lwc, fflib, development, technical]
 ---
 
@@ -18,7 +18,7 @@ tags: [salesforce, apex, lwc, fflib, development, technical]
 Load this skill for any Salesforce technical task: Apex classes, LWC components, triggers, batch jobs, test classes, SOQL, selectors, services, domains.
 
 **This is the canonical GForce Salesforce standard.** It lives in `Gforce-Innovation-Kft/gforce-ai`
-and is installed per repo via `npx skills add Gforce-Innovation-Kft/gforce-ai@salesforce-developer`,
+and is installed per repo via `npx skills add Gforce-Innovation-Kft/gforce-ai@gforce-salesforce-developer`,
 tracked in that repo's `skills-lock.json`. Repo-specific rules go in
 `.claude/references/local-standards.md` and win over this file.
 

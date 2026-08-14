@@ -8,8 +8,8 @@
 
 | Marker | Places |
 |---|---|
-| `sfdx-project.json` | `salesforce-developer` skill + `sf-code-reviewer` agent |
-| `.github/workflows/*.y{a,}ml` | `gforce-github-actions` skill + `gha-workflow-author` agent |
+| `sfdx-project.json` | `gforce-salesforce-developer` skill + `gforce-sf-code-reviewer` agent |
+| `.github/workflows/*.y{a,}ml` | `gforce-github-actions` skill + `gforce-gha-workflow-author` agent |
 | `Dockerfile*` | `docker-expert`, `multi-stage-dockerfile`, `devcontainer-setup` skills |
 | `*.tf` | `terraform-test`, `terraform-module-library` skills |
 
@@ -22,7 +22,7 @@ over with a placeholder name.
 
 `find-skills` · `lean-ctx` · `research` · `prompt-engineer` · `devops-engineer` · `actions`
 
-Everything else is project-scoped. Audited quarterly by the `skills-auditor` agent.
+Everything else is project-scoped. Audited quarterly by the `gforce-skills-auditor` agent.
 
 ## Upstream-sourced skills
 

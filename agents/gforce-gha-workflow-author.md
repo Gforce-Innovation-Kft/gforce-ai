@@ -1,5 +1,5 @@
 ---
-name: gha-workflow-author
+name: gforce-gha-workflow-author
 description: >
   Writes and reviews GitHub Actions to GForce standards — shared-github-actions@v2 callables,
   OIDC over long-lived keys, action naming, pinned tags, the usage-catalog gate.
@@ -8,6 +8,7 @@ description: >
   definitions.
 tools: Read, Grep, Glob, Edit, Write, Bash
 model: opus
+version: 2.0.0
 ---
 
 # GitHub Actions author

@@ -1,0 +1,36 @@
+---
+# Static governance checks — zero LLM tokens by design. The vitest suite
+# already validates the real repo's catalog, overrides, naming, and the
+# ratification verdicts against synthetic git fixtures (no network). Evals
+# never run here; scorecard freshness is checked, generating one is a human
+# dispatch.
+name: validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions: {}
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0  # version-bump/scorecard checks diff against origin/main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run type-check
+      - run: npm test
+      - name: Version bumped on content change
+        if: github.event_name == 'pull_request'
+        run: npx tsx src/cli.ts version-bump origin/main
+      - name: Scorecard freshness (advisory until first eval dispatch)
+        if: github.event_name == 'pull_request'
+        run: npx tsx src/cli.ts scorecards --advisory origin/main

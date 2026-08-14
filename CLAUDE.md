@@ -18,22 +18,30 @@ consumed everywhere, instead of being copy-pasted and drifting per repo. This re
   Start here: `standards/doc-standard.md` and `standards/skill-scope.md`.
 - `upstream/` — approved industry skills and their ratified pins (`catalog.json`).
   Policy: `standards/upstream-policy.md`. Never a mirror — bytes install from upstream.
-- `docs/` — not distributed. `architecture.md` (repository responsibilities and boundary
-  tests) and `deferred-verification.md` (checks that need a live org).
+- `schemas/`, `src/`, `tests/` — governance tooling (strict TypeScript + vitest):
+  schema/naming/version validators, the ratification poller, the consumer manifest
+  generator. One entry point: `npx tsx src/cli.ts`. CI (`validate.yml`) is static only —
+  typecheck + tests + diff checks, zero LLM tokens.
+- `templates/` — canonical agent/skill file shapes; the naming validator enforces them.
+- `docs/` — not distributed. `architecture.md`, `deferred-verification.md`, and
+  `docs/design/` (specs and plans, kept as historical record).
 
-Nothing else exists yet. `commands/`, `baseline/` and `migrations/` were planned and are
-not built; do not reference them as if they were.
+**Naming:** every GForce-owned agent and skill is namespaced `gforce-*` (validator-
+enforced, `standards/invariants.md` #9) so upstream and company-owned content are
+mechanically distinguishable. `commands/`, `baseline/` and `migrations/` were planned
+and are not built; do not reference them as if they were.
 
 ## How other repos consume this
 
 - **Skills:** `npx skills add Gforce-Innovation-Kft/gforce-ai@<skill>`. This is the only supported
   distribution path for skills — never vendor a copy into a consuming repo.
 - **Agents:** the `skills` CLI has no agent verb, so agents are copied into the consuming repo's
-  `.claude/agents/` by hand. **This is a known architectural gap, not a design choice.** A copied
-  agent has no hash, no lockfile entry and no drift check, so it can be silently rewritten — a
-  Prettier `lint-staged` glob did exactly that on 2026-08-14. The vendored skills were recoverable
-  because the lockfile caught them; the agents were not. Closing this gap is on the roadmap in
-  `docs/architecture.md`.
+  `.claude/agents/` — but every copy is hash-pinned in the consumer's `gforce-manifest.json`
+  (`npx tsx src/cli.ts manifest <consumer-dir>`). An edited copy surfaces as **DRIFT** in
+  `npx tsx src/cli.ts verify <dir>` and in the read-only SessionStart report
+  (`scripts/session-report.mjs`, vendored to consumers). A Prettier `lint-staged` glob silently
+  rewrote agent copies on 2026-08-14 — that class of failure is now detectable. Agent copies stay
+  read-only: changes land here first (`standards/invariants.md` #5).
 
 ## Precedence: industry → fleet → shared → local, last wins
 
@@ -56,7 +64,9 @@ Say **fleet / shared / local**, not L1/L2/L3. "L1–L4" already means pipeline n
 A repo that needs to specialize a shared skill does **not** copy and edit it — that breaks
 `npx skills update` permanently and drifts silently. Instead it adds
 `.claude/references/local-standards.md`. Shared skills read that file **last**, and it **wins** on
-conflict. That is the only sanctioned L3 extension point.
+conflict — **except the non-overridable core** marked ● in `standards/invariants.md`
+(credential and supply-chain rules); exceptions to those require a PR here, not a local edit.
+That local file is the only sanctioned local-layer extension point.
 
 ## Where to look next
 

@@ -28,7 +28,7 @@ Ratified intent: `docs/intent/industry-upstream-flow.md`. Extends the precedence
 Per source: `ref` (branch), `ratified_commit` (the last upstream commit a human reviewed
 and merged), `ratified_on`, and the approved skill list with a placement `marker`
 (capability markers, same mechanism as `skill-scope.md`). A skill absent from the catalog
-is not approved — installing it anywhere is a scope violation the `skills-auditor` flags.
+is not approved — installing it anywhere is a scope violation the `gforce-skills-auditor` flags.
 
 The pin means "last ratified content state": it advances only when approved skill content
 changes and the PR merges.
