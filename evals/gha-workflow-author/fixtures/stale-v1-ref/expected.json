@@ -1,0 +1,16 @@
+{
+  "description": "Pins @v1, which is frozen pre-rename, and uses the pre-ADR-0002 name sf-pr-validate.yml instead of reusable-sf-pr-validate.yml. Also has no permissions block.",
+  "assert": {
+    "mustFlag": [
+      {
+        "file": "input.yml",
+        "category": "stale-ref"
+      },
+      {
+        "file": "input.yml",
+        "category": "permissions"
+      }
+    ],
+    "minFindings": 2
+  }
+}

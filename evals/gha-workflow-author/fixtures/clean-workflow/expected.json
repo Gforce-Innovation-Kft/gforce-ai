@@ -1,0 +1,6 @@
+{
+  "description": "Correct: @v2, ADR-0002 name, default-deny permissions widened per job, composes the shared callable rather than duplicating it. The false-positive control.",
+  "assert": {
+    "maxFindings": 0
+  }
+}

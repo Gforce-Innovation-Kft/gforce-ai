@@ -1,0 +1,10 @@
+name: PR validate
+on: pull_request
+permissions: {}
+jobs:
+  validate:
+    permissions:
+      contents: read
+      id-token: write
+    uses: Gforce-Innovation-Kft/shared-github-actions/.github/workflows/reusable-sf-pr-validate.yml@v2
+    secrets: inherit

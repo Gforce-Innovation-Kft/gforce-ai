@@ -1,0 +1,6 @@
+name: PR validate
+on: pull_request
+jobs:
+  validate:
+    uses: Gforce-Innovation-Kft/shared-github-actions/.github/workflows/sf-pr-validate.yml@v1
+    secrets: inherit

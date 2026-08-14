@@ -1,0 +1,16 @@
+{
+  "description": "Three separate house-standard violations: long-lived AWS keys where OIDC belongs, a latest container tag, and actions/checkout pinned to @main.",
+  "assert": {
+    "mustFlag": [
+      {
+        "file": "input.yml",
+        "category": "credentials"
+      },
+      {
+        "file": "input.yml",
+        "category": "pinning"
+      }
+    ],
+    "minFindings": 3
+  }
+}
