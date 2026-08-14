@@ -4,12 +4,16 @@
 
 ```yaml
 ---
-name: <kebab-case>
+name: <gforce-… kebab-case — must equal the filename stem; validator-enforced>
 description: <≤60 words, MUST contain "TRIGGER when:" and "DO NOT TRIGGER when:">
 tools: <explicit list — never omit, never "*">
 model: <opus | sonnet | haiku>
+version: <semver — CI rejects a content change without a bump>
 ---
 ```
+
+Canonical shape: `templates/agent-template.md`. Checked by
+`npx tsx src/cli.ts naming --strict` in `validate.yml`.
 
 `description` loads into every session where the agent is installed. It is the trigger contract
 and the most expensive token in the agent. Body loads only on invoke — budget ≤200 lines.

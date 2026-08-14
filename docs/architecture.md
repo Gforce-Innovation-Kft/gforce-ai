@@ -98,12 +98,13 @@ prompt claims:
   is defeated by `gh api`. Phrase it as: never mutate git history, the remote, or GitHub
   state, regardless of which tool would do it.
 
-**Open gap:** agents are delivered by file copy — no hash, no lockfile, no drift check,
-while skills have all three. Every agent copy in the estate is an unversioned fork waiting
-to happen; on 2026-08-14 a Prettier `lint-staged` glob forked both. The skills were
-recoverable because the lockfile caught them. The agents were not.
+**Provenance (gap closed 2026-08-14):** agents are still delivered by file copy, but every
+copy is hash-pinned in the consumer's `gforce-manifest.json` and checked by
+`npx tsx src/cli.ts verify` plus the read-only SessionStart report. The Prettier
+`lint-staged` incident that silently forked both agent copies is now a detectable DRIFT.
 
-**Rules** — precedence is fleet → shared → local, last wins. The router reads
+**Rules** — precedence is industry → fleet → shared → local, last wins — except the
+non-overridable ● core in `standards/invariants.md`. The router reads
 `local-standards.md` last so a repo can specialise without touching the shared artifact.
 **The filename is load-bearing**: repo rules under any other name are invisible to the
 skill.
@@ -118,10 +119,35 @@ false-positive rate on clean fixtures. Recall alone is gameable by an agent that
 everything. An eval may only assert on vocabulary the agent was explicitly taught — check
 the literal category string, not the concept.
 
-**Not yet real:** no agent in this estate has ever been scored. The harness, fixtures and
-scorecard exist; dispatch does not, so every fixture reports *skipped*. Until that lands,
-`agent-standard.md`'s "fails twice, gets deleted" rule is unenforceable and a green
-`npm test` is easy to misread as the suites passing.
+**Deliberately dispatch-only:** evals never run in CI — burning tokens is always an
+explicit human decision. CI checks only that a changed agent carries a scorecard in
+`standards/evals/` whose hash matches the agent's bytes (advisory until the first real
+dispatch). No agent has been scored yet; until one is, "fails twice, gets deleted" remains
+unenforceable and a green `npm test` means the tooling passes, not the agents.
+
+## Governance flow
+
+```
+INDUSTRY   forcedotcom/sf-skills · trailofbits · sickn33 · github/awesome-copilot
+   │       bytes install direct from upstream, hash-pinned in skills-lock.json
+   ▼
+FLEET      gforce-ai — catalog-of-record (upstream/catalog.json), deltas
+   │       (skills/*/overrides.json), standards, gforce-* agents
+   ▼
+SHARED     marker-installed skills + agent copies, hash-pinned in
+   │       gforce-manifest.json
+   ▼
+LOCAL      .claude/references/local-standards.md — read last, wins
+           (outside the ● core in standards/invariants.md)
+
+upstream change ──weekly poll──▶ tripwire scan ──▶ ratification PR
+  (human review, never auto-merged) ──▶ new pin ──▶ consumer bump PRs
+  ──▶ verify (hashes vs pins) ──▶ SessionStart reports OK
+```
+
+How-tos live next to the thing: new agent → `templates/agent-template.md` +
+`standards/agent-standard.md`; new override → `schemas/overrides.schema.json` +
+`standards/upstream-policy.md`; what must never be done → `standards/invariants.md`.
 
 ## Two AI surfaces, one governed
 
@@ -148,7 +174,7 @@ every one of them at once.
 | Image | semver tag + cosign | tag string | signature verification |
 | Action / workflow | floating `@v2` | `uses:` ref | usage catalog |
 | Skill | content hash | `skills-lock.json` | `npx skills check` |
-| Agent | *none* | copied file | *none* — the open gap |
+| Agent | frontmatter semver | copied file | `gforce-manifest.json` hash + session report |
 | Standard | git history | read from the skill | `gforce-skills-auditor` |
 | Template | clone point | repository state | none — inherent |
 
