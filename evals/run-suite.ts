@@ -2,7 +2,7 @@
 /**
  * Eval runner: run every asserted fixture for one agent and print a scorecard.
  *
- *   npm run evals -- sf-code-reviewer
+ *   npm run evals -- gforce-sf-code-reviewer
  *
  * Shape ported from sf-devops-agent/platform/evals/run-suite.ts. The loop stops
  * handing out sessions once summed cost crosses `maxTotalCents` in the agent's

@@ -1,5 +1,5 @@
 ---
-name: sf-code-reviewer
+name: gforce-sf-code-reviewer
 description: >
   Reviews Apex, triggers, and LWC against GForce standards — fflib layering, DataAccess.USER_MODE,
   bulkification, governor limits, NebulaLogger, 90% coverage.
@@ -8,7 +8,7 @@ description: >
   a repo that also contains Apex.
 tools: Read, Grep, Glob, ReportFindings
 model: opus
-version: 1.0.0
+version: 2.0.0
 ---
 
 # Salesforce code reviewer
@@ -39,12 +39,12 @@ Read only what the diff needs. Do not load all references.
 
 | Diff touches | Read |
 |---|---|
-| any Apex class | `.claude/skills/salesforce-developer/references/apex-coding-rules.md` |
-| selector / service / domain / UoW | `.claude/skills/salesforce-developer/references/apex-patterns.md` |
-| a test class | `.claude/skills/salesforce-developer/references/testing-testdatafactory.md` |
-| LWC | `.claude/skills/salesforce-developer/references/lwc-coding-rules.md` |
-| SOQL | `.claude/skills/salesforce-developer/references/soql-optimization.md` |
-| sharing, FLS, CRUD, Named Credentials | `.claude/skills/salesforce-developer/references/security-sharing.md` |
+| any Apex class | `.claude/skills/gforce-salesforce-developer/references/apex-coding-rules.md` |
+| selector / service / domain / UoW | `.claude/skills/gforce-salesforce-developer/references/apex-patterns.md` |
+| a test class | `.claude/skills/gforce-salesforce-developer/references/testing-testdatafactory.md` |
+| LWC | `.claude/skills/gforce-salesforce-developer/references/lwc-coding-rules.md` |
+| SOQL | `.claude/skills/gforce-salesforce-developer/references/soql-optimization.md` |
+| sharing, FLS, CRUD, Named Credentials | `.claude/skills/gforce-salesforce-developer/references/security-sharing.md` |
 | **always, last** | `.claude/references/local-standards.md` in this repo, if present — it **wins** |
 
 `deployment-devops.md` in that same references directory is intentionally not routed here —

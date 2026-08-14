@@ -18,7 +18,7 @@ cd ~/gforce/sfdx_template_enterprise
 
 # 1. Stage the templates into a real package directory with meta files
 mkdir -p /tmp/asset-check/classes
-for f in .claude/skills/salesforce-developer/assets/*.cls; do
+for f in .claude/skills/gforce-salesforce-developer/assets/*.cls; do
   cp "$f" /tmp/asset-check/classes/
   printf '<?xml version="1.0" encoding="UTF-8"?>\n<ApexClass xmlns="http://soap.sforce.com/2006/04/metadata">\n    <apiVersion>67.0</apiVersion>\n    <status>Active</status>\n</ApexClass>\n' \
     > "/tmp/asset-check/classes/$(basename "$f")-meta.xml"
@@ -64,15 +64,15 @@ claude
 
 Ask: *"add a selector for Contact following our standards"*.
 
-- ✅ `salesforce-developer` fires, and the generated selector has a `DataAccess.USER_MODE`
+- ✅ `gforce-salesforce-developer` fires, and the generated selector has a `DataAccess.USER_MODE`
   constructor and API version **65.0** (that repo's `sourceApiVersion`), not 67.0.
 - ❌ if it does not fire, the symlink is not being followed — check
-  `ls -la ~/.claude/skills/salesforce-developer`.
+  `ls -la ~/.claude/skills/gforce-salesforce-developer`.
 
 ## 3. Prove it does NOT over-fire
 
 Same fresh session, in `~/gforce/sf-devops-agent`, ask for a change to `src/investigate.ts`.
-`salesforce-developer` must **not** activate. That is what the `DO NOT TRIGGER` clause buys, and
+`gforce-salesforce-developer` must **not** activate. That is what the `DO NOT TRIGGER` clause buys, and
 it is the half that is easy to forget to test.
 
 ## 4. Re-apply the narrowed Managed Agents skill — costs a few cents

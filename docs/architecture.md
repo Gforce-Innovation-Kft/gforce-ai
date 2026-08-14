@@ -72,7 +72,7 @@ including an agent — can settle the question.
 |---|---|---|
 | Container images, image release | `sf-docker-images` | Dockerfile + tag; `reusable-docker-image-build.yml` |
 | Reusable actions & workflows | `shared-github-actions` | `action.yml` / workflow file; consumers in `docs/usage-catalog.md` |
-| Salesforce coding standard | `gforce-ai` | `skills/salesforce-developer/` |
+| Salesforce coding standard | `gforce-ai` | `skills/gforce-salesforce-developer/` |
 | Salesforce architecture & test patterns | `sfdx_template_enterprise` | the template itself |
 | Release & deployment strategy | `shared-github-actions`, `sf-devops-agent` | reusable workflows; agent domain packs |
 | AI skills, agents, rules, evals | `gforce-ai` | `skills/`, `agents/`, `standards/`, `evals/` |
@@ -149,7 +149,7 @@ every one of them at once.
 | Action / workflow | floating `@v2` | `uses:` ref | usage catalog |
 | Skill | content hash | `skills-lock.json` | `npx skills check` |
 | Agent | *none* | copied file | *none* — the open gap |
-| Standard | git history | read from the skill | `skills-auditor` |
+| Standard | git history | read from the skill | `gforce-skills-auditor` |
 | Template | clone point | repository state | none — inherent |
 
 ## Naming

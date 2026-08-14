@@ -1,5 +1,5 @@
 ---
-name: skills-auditor
+name: gforce-skills-auditor
 description: >
   Audits the GForce fleet's AI setup — skill scope violations, lockfile drift, broken symlinks,
   orphaned references, per-session context cost, and agent invocation counts.
@@ -7,7 +7,7 @@ description: >
   DO NOT TRIGGER when: installing or authoring a single skill in one repo.
 tools: Read, Grep, Glob, Bash
 model: sonnet
-version: 1.0.0
+version: 2.0.0
 ---
 
 # Skills auditor

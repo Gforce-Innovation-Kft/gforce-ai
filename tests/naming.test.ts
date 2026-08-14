@@ -76,8 +76,9 @@ describe('validateNaming', () => {
     expect(validateNaming(root).errors.join()).toContain('directory');
   });
 
-  it('passes the real repository in default (pre-rename) mode', () => {
-    const r = validateNaming('.');
+  it('passes the real repository under strict namespace enforcement', () => {
+    const r = validateNaming('.', { strict: true });
     expect(r.errors).toEqual([]);
+    expect(r.warnings).toEqual([]);
   });
 });
