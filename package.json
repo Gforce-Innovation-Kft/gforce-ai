@@ -3,10 +3,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "validate": "node scripts/validate-schemas.mjs",
-    "test": "bash tests/run.sh"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "type-check": "tsc --noEmit",
+    "validate": "tsx src/cli.ts"
   },
   "devDependencies": {
-    "ajv": "^8.17.1"
+    "@types/node": "^22.10.2",
+    "ajv": "^8.17.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^3.0.0",
+    "yaml": "^2.6.0"
   }
 }

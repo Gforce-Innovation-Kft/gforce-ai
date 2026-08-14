@@ -6,7 +6,15 @@
 
 **Architecture:** All validators are dependency-light shell/node scripts under `scripts/`, wired into one static `validate.yml`; tests run against synthetic git fixtures (no network). Renames land after CI is green in warning mode, then flip to blocking (tag `v2.0.0`).
 
-**Tech Stack:** bash 3.2-compatible shell, jq, node 22 + ajv (only for JSON Schema), GitHub Actions, `gh` CLI.
+**Tech Stack:** TypeScript (strict) + vitest + tsx, ajv, node 22, GitHub Actions, `gh` CLI.
+
+> **Amendment (2026-08-14, Gabor):** all governance tooling is TypeScript under
+> `src/` with vitest tests under `tests/` — the bash originals were ported and
+> deleted (three separate SIGPIPE workarounds made them unreadable). Early-stage
+> scope: light tests (only load-bearing cases), CI = typecheck + vitest + the two
+> diff-based checks, nothing more. The separate anchors CI job was dropped; dead
+> anchors surface as **DEAD ANCHOR** lines in the weekly ratification report,
+> which already clones the sources.
 
 ## Global Constraints
 
