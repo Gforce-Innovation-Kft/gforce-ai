@@ -1,0 +1,12 @@
+{
+  "name": "gforce-ai-governance",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "validate": "node scripts/validate-schemas.mjs",
+    "test": "bash tests/run.sh"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}
