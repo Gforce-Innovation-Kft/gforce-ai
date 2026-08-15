@@ -1,0 +1,31 @@
+# Control-plane CI — every gate is static (zero LLM tokens), mirroring src/cli.ts.
+# Self-contained by design (MVP): no reusable-workflow dependency.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # version-bump/scorecard gates diff against the PR base
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run type-check
+      - run: npx tsx src/cli.ts naming --strict
+      - run: npx tsx src/cli.ts schemas
+      - name: version-bump gate (changed skills/agents must bump)
+        if: github.event_name == 'pull_request'
+        run: npx tsx src/cli.ts version-bump "origin/${{ github.base_ref }}"
+      - name: scorecard gate (advisory)
+        if: github.event_name == 'pull_request'
+        run: npx tsx src/cli.ts scorecards --advisory "origin/${{ github.base_ref }}"
