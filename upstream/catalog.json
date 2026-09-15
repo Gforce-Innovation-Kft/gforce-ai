@@ -3,8 +3,8 @@
   "sources": {
     "forcedotcom/sf-skills": {
       "ref": "main",
-      "ratified_commit": "ba78d3871d54196e86dbde6bbd9f9a79944ff07f",
-      "ratified_on": "2026-08-14",
+      "ratified_commit": "91488fd1660b95a31911214187d76229f2610135",
+      "ratified_on": "2026-09-15",
       "skills": [
         {
           "name": "platform-apex-generate",
