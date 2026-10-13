@@ -3,8 +3,8 @@
   "sources": {
     "forcedotcom/sf-skills": {
       "ref": "main",
-      "ratified_commit": "ba78d3871d54196e86dbde6bbd9f9a79944ff07f",
-      "ratified_on": "2026-08-14",
+      "ratified_commit": "4bbae5c421e51b40e4169afa72c4496372a602a7",
+      "ratified_on": "2026-10-13",
       "skills": [
         {
           "name": "platform-apex-generate",
@@ -62,8 +62,8 @@
     "trailofbits/skills": {
       "$comment": "Ratified 2026-08-14 in the governance-v2 PR — previously consumed ungoverned by sf-docker-images.",
       "ref": "main",
-      "ratified_commit": "4db88ee79db0a68bbe049fe827e272ee2bc19510",
-      "ratified_on": "2026-08-14",
+      "ratified_commit": "442fc9d6c89b1e937e6f7a477e7071ea75fcbea4",
+      "ratified_on": "2026-10-13",
       "skills": [
         {
           "name": "devcontainer-setup",
